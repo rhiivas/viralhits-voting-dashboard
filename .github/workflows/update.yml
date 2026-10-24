@@ -1,0 +1,32 @@
+name: Refresh public voting standings
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: voting-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright beautifulsoup4
+      - run: python -m playwright install --with-deps chromium
+      - name: Read public standings and generate dashboard
+        run: python tracker.py --once --csv docs/viral_hits_standings.csv --team docs/team_participation.csv --dashboard docs/index.html
+      - name: Publish updated snapshot
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/index.html docs/viral_hits_standings.csv docs/team_participation.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update voting standings'
+            git push
+          fi
