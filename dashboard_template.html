@@ -2,13 +2,72 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1114"><meta name="description" content="Lookmhee × Sonya fan voting command center — public Best Actress standings and historical trends."><title>LOOKMHEE × SONYA | Voting Command Center</title>
 <style>
 :root{--bg:#091113;--panel:#111d20;--panel2:#17272a;--text:#f3f5ef;--muted:#a9bbb8;--mint:#98f2d9;--aqua:#63c9ce;--red:#e54d5b;--line:#2c4142;--gold:#e9cf9c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit}button{font:inherit;cursor:pointer}.shell{max-width:1220px;margin:auto;padding:0 24px}.topbar{border-bottom:1px solid #ffffff1a;background:#091113ec;position:sticky;top:0;z-index:20;backdrop-filter:blur(18px)}.topbar .shell{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font-size:13px;font-weight:900;letter-spacing:.19em}.logo span{color:var(--mint)}.nav{display:flex;gap:24px;align-items:center}.nav a{text-decoration:none;color:#c9d5d1;font-size:13px}.nav a:hover{color:var(--mint)}.nav .navvote{background:var(--mint);color:#091113;border-radius:6px;padding:10px 16px;font-weight:800}.hero{position:relative;min-height:590px;overflow:hidden;background:radial-gradient(circle at 65% 30%,#28605b,#0b1617 65%);display:grid;grid-template-columns:1fr 47%;align-items:center}.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#091113 0%,#091113e8 31%,#09111333 70%);z-index:1;pointer-events:none}.hero-photo{position:absolute;right:0;top:0;height:100%;width:60%;object-fit:cover;object-position:center 43%;filter:saturate(.88)}.hero-inner{position:relative;z-index:2;padding:80px 0 84px;grid-column:1/-1}.hero-inner .copy{max-width:690px}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--mint);font-size:12px;font-weight:800;letter-spacing:.23em;text-transform:uppercase}.eyebrow:before{content:"";height:7px;width:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 13px var(--mint)}h1{font-size:clamp(55px,8vw,112px);line-height:.91;letter-spacing:-.075em;margin:24px 0 22px;font-weight:900}h1 em{font-style:normal;color:var(--mint)}.subtitle{font-size:clamp(16px,2vw,22px);color:#e4eae6;max-width:530px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0}.btn{display:inline-flex;justify-content:center;align-items:center;text-decoration:none;border-radius:6px;padding:14px 22px;font-weight:800;font-size:13px;letter-spacing:.045em;border:1px solid #ffffff55;transition:transform .2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--red);border-color:var(--red);color:white}.btn-secondary{background:#0c1819bb;color:white}.hero-note{font-size:12px;color:#b4c6c1}.live-line{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;margin-top:28px}.live-line .label{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);font-weight:800}.live-line .date{font-size:12px;color:var(--muted)}main{padding-bottom:90px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:52px 0 18px}.section-head h2{font-size:clamp(27px,3vw,38px);letter-spacing:-.04em;line-height:1.15;margin:0}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.statgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{background:linear-gradient(140deg,#16292a,#111b1e);border:1px solid var(--line);border-radius:12px;padding:23px;min-height:144px}.stat .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#b3c6c1}.stat .value{font-size:clamp(30px,4vw,49px);font-weight:850;letter-spacing:-.06em;line-height:1.2;margin-top:13px}.stat .value.mint{color:var(--mint)}.stat .value.gold{color:var(--gold)}.stat .sub{font-size:11px;color:var(--muted)}.spotlights{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-top:14px}.spot{border:1px solid var(--line);border-radius:12px;padding:26px;background:var(--panel)}.spot.look{background:linear-gradient(135deg,#1d3d39,#112323)}.spot.sonya{background:linear-gradient(135deg,#183034,#172022)}.spot h3{font-size:26px;letter-spacing:-.04em;margin:0}.spot .thai{font-size:14px;color:var(--muted);margin-top:0}.spot .number{font-size:40px;line-height:1.1;font-weight:850;letter-spacing:-.05em;margin:12px 0}.spot.look .number{color:var(--mint)}.spot.sonya .number{color:var(--aqua)}.bar{height:9px;background:#ffffff1a;border-radius:50px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--mint);border-radius:50px;transition:width .5s}.spot.sonya .bar i{background:var(--aqua)}.spot footer{font-size:12px;color:var(--muted);margin-top:12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:25px;margin-top:15px}.panel h3{margin:0 0 8px;font-size:24px;letter-spacing:-.03em}.panel p{color:var(--muted);font-size:13px;margin:0 0 16px}.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:12px;color:#c4d0cd}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:var(--mint)}.dot.other{background:var(--aqua)}.dot.sonya{background:var(--gold)}.chart-wrap{overflow-x:auto}svg.chart{display:block;width:100%;min-width:560px;height:auto}.gridline{stroke:#355051;stroke-width:1}.axis{fill:#9eb3ad;font-size:11px}.chart-line{fill:none;stroke:var(--mint);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.chart-line.other{stroke:var(--aqua)}.chart-line.sonya{stroke:var(--gold)}.leader{display:grid;gap:10px}.leader-row{display:grid;grid-template-columns:54px minmax(140px,1fr) minmax(80px,2fr) 75px;align-items:center;gap:14px;background:#152326;border:1px solid #294044;padding:13px 16px;border-radius:9px}.leader-row.look{background:#183b36;border-color:#63c9ae}.leader-row.sonya{border-color:#47777b}.rank{font-weight:800;color:#d5e6e1}.nominee{font-weight:750}.nominee small{display:block;font-weight:400;color:var(--muted);font-size:11px}.leader-row .bar{height:8px}.pct{text-align:right;font-size:17px;font-weight:850;font-variant-numeric:tabular-nums}.teamgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.teamstat{padding:16px;border-radius:9px;background:#1a2a2d}.teamstat strong{font-size:24px;display:block;color:var(--mint)}.teamstat span{font-size:12px;color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line)}th{color:var(--mint);font-weight:700}td{color:#d9e5df}.table-wrap{overflow:auto}.empty{color:var(--muted);padding:18px;background:#152427;border-radius:8px}.foot{border-top:1px solid var(--line);padding:27px 0 110px;color:var(--muted);font-size:12px}.foot a{color:var(--mint)}.sticky-vote{display:none}.share{background:none;border:1px solid #627a75;color:var(--text);border-radius:6px;padding:9px 12px;font-weight:700;font-size:12px}.share:hover{border-color:var(--mint)}@media(max-width:850px){.hero{min-height:570px}.hero-photo{width:100%;opacity:.58;object-position:center 38%}.hero::before{background:linear-gradient(90deg,#091113f0 0%,#09111377 100%),linear-gradient(0deg,#091113 0%,transparent 80%)}.statgrid{grid-template-columns:repeat(2,1fr)}.spotlights{grid-template-columns:1fr}.nav a:not(.navvote){display:none}.hero-inner{padding:90px 0 55px}}@media(max-width:550px){.shell{padding:0 16px}.topbar .shell{min-height:61px}.logo{font-size:11px;letter-spacing:.12em}.nav .navvote{padding:8px 11px;font-size:11px}.hero{min-height:620px}.hero-photo{object-position:55% center;opacity:.53}.hero-inner{padding:90px 0 40px}h1{font-size:clamp(54px,15vw,78px)}.stat{padding:16px;min-height:125px}.stat .value{font-size:34px}.section-head{margin-top:40px}.spot{padding:20px}.panel{padding:17px}.leader-row{grid-template-columns:35px minmax(0,1fr) 65px;gap:8px;padding:12px 10px}.leader-row>.bar{grid-column:2/4;grid-row:2}.nominee{font-size:13px}.pct{font-size:15px}.teamgrid{grid-template-columns:1fr 1fr}.sticky-vote{display:flex;position:fixed;bottom:0;left:0;right:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:#091113ef;border-top:1px solid #4b6460;z-index:30;gap:10px}.sticky-vote .btn{flex:1;padding:11px}.sticky-vote .share{padding:10px}.foot{padding-bottom:115px}}
-</style></head><body>
+</style>
+<style>
+/* Campaign refinements: portrait visibility, lead signal, chart controls, mobile */
+.hero{min-height:590px;grid-template-columns:1fr}
+.hero-photo{width:55%;height:100%;object-fit:contain;object-position:center center;background:#101d1d}
+.hero::before{background:linear-gradient(90deg,#091113 0%,#091113 33%,#091113e8 42%,#09111300 65%)}
+.hero-inner .copy{max-width:min(48%,570px)}
+.hero h1{font-size:clamp(48px,5.8vw,86px);letter-spacing:-.065em;overflow-wrap:normal}
+.hero .subtitle{font-size:clamp(16px,1.7vw,21px)}
+.lead-change{margin-top:13px;border:1px solid var(--line);border-radius:9px;background:#142425;padding:12px 17px;color:var(--muted);font-size:13px}
+.lead-change strong{color:var(--mint)}
+.lead-change.negative strong{color:#ff8793}
+.lead-change.neutral strong{color:var(--text)}
+.chart-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.chart-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chart-controls label{font-size:12px;color:var(--muted)}
+.chart-controls select{max-width:180px;min-height:40px;padding:8px 10px;background:#192d30;color:var(--text);border:1px solid #4a6969;border-radius:7px;font:inherit;font-size:12px}
+.chart-controls select:focus-visible,.btn:focus-visible,.nav a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+svg.chart{min-width:0}
+#standings,#trends,#team{scroll-margin-top:85px}
+@media(max-width:1000px){
+ .hero-photo{width:57%;object-fit:cover;object-position:center 28%}
+ .hero-inner .copy{max-width:53%}
+ .hero h1{font-size:clamp(47px,6.3vw,72px)}
+}
+@media(max-width:850px){
+ .hero{min-height:650px;display:flex;align-items:flex-end}
+ .hero-photo{width:100%;height:75%;top:0;object-fit:contain;object-position:center top;opacity:.92}
+ .hero::before{background:linear-gradient(0deg,#091113 2%,#091113f5 22%,#091113aa 44%,#09111300 76%)}
+ .hero-inner{width:100%;padding:300px 0 34px}
+ .hero-inner .copy{max-width:100%}
+ .hero h1{font-size:clamp(48px,9vw,78px);margin:15px 0}
+ .hero .subtitle{font-size:17px}
+ .hero-actions{margin:18px 0}
+}
+@media(max-width:550px){
+ .hero{min-height:640px}
+ .hero-photo{height:68%;object-position:center top}
+ .hero-inner{padding:280px 0 25px}
+ .hero h1{font-size:clamp(43px,12vw,66px);line-height:.94}
+ .hero .eyebrow{font-size:10px;letter-spacing:.11em}
+ .hero .subtitle{font-size:15px}
+ .hero-actions .btn{padding:12px 13px;font-size:11px}
+ .statgrid{gap:9px}
+ .stat{padding:14px;min-height:122px}
+ .stat .value{font-size:clamp(26px,8vw,35px)}
+ .spot h3{font-size:22px}
+ .chart-heading{display:block}
+ .chart-controls{display:grid;grid-template-columns:auto 1fr;gap:8px}
+ .chart-controls select{max-width:none;width:100%}
+ .chart-wrap{overflow:hidden}
+ .chart-wrap svg.chart{width:100%;height:auto}
+ .leader-row{grid-template-columns:32px minmax(0,1fr) 62px}
+ .leader-row .nominee{overflow-wrap:anywhere}
+ .live-line{align-items:flex-start}
+ .teamgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head><body>
 <header class="topbar"><div class="shell"><div class="logo">LOOKMHEE <span>×</span> SONYA</div><nav class="nav"><a href="#standings">Standings</a><a href="#trends">Trends</a><a href="#team">Fan team</a><a class="navvote" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" target="_blank" rel="noopener noreferrer">VOTE NOW ↗</a></nav></div></header>
 <section class="hero"><img class="hero-photo" src="lookmhee-sonya.JPEG" alt="Lookmhee on the left and Sonya on the right, posing together in a fashion photograph"><div class="hero-inner shell"><div class="copy"><span class="eyebrow">THE VIRAL HITS AWARDS 2026 · BEST ACTRESS</span><h1>LOOKMHEE<br><em>× SONYA.</em></h1><div class="subtitle">Two stars. One fan community.<br>Following the race, together.</div><div class="hero-actions"><a class="btn btn-primary" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" target="_blank" rel="noopener noreferrer">VOTE FOR LOOKMHEE ↗</a><a class="btn btn-secondary" href="#standings">VIEW STANDINGS ↓</a></div><div class="hero-note">Fan-made, independent dashboard · Public results only</div></div></div></section>
 <main class="shell"><div class="live-line"><div class="label">● PUBLIC STANDINGS MONITOR</div><div class="date" id="updated">Loading latest recorded snapshot…</div><button class="share" type="button" id="shareTop">SHARE DASHBOARD ↗</button></div>
-<div class="section-head" id="standings"><div><h2>The race at a glance.</h2><p>Current publicly displayed standings, rounded to one decimal place.</p></div></div><div class="statgrid" id="stats"></div>
+<div class="section-head" id="standings"><div><h2>The race at a glance.</h2><p>Current publicly displayed standings, rounded to one decimal place.</p></div></div><div class="statgrid" id="stats"></div><div class="lead-change" id="leadChange" aria-live="polite">Comparing the latest recorded snapshots…</div>
 <div class="spotlights"><article class="spot look"><div class="eyebrow">PRIMARY SPOTLIGHT</div><h3>Lookmhee Punyapat</h3><p class="thai">ลูกหมี ปัญญาพัชร</p><div class="number" id="lmValue">—</div><div class="bar"><i id="lmBar"></i></div><footer id="lmFoot">Waiting for results</footer></article><article class="spot sonya"><div class="eyebrow">ALSO NOMINATED</div><h3>Sonya Saranphat</h3><p class="thai">ซอนญ่า ศรัณย์ภัทร์</p><div class="number" id="sonyaValue">—</div><div class="bar"><i id="sonyaBar"></i></div><footer id="sonyaFoot">Waiting for results</footer></article></div>
-<section class="panel" id="trends"><h3>How the race is moving.</h3><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
+<section class="panel" id="trends"><div class="chart-heading"><h3>How the race is moving.</h3><div class="chart-controls" role="group" aria-label="Chart controls"><label for="chartRange">Period</label><select id="chartRange"><option value="all">All history</option><option value="24">Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select><label for="chartScale">Scale</label><select id="chartScale"><option value="full">Full (0–100%)</option><option value="detail">Detailed</option></select></div></div><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
 <section class="panel"><h3>Complete leaderboard.</h3><p>All nominees tracked. Lookmhee and Sonya are highlighted; every nominee is shown.</p><div class="leader" id="leaderboard"></div></section>
 <section class="panel" id="team"><h3>Our voting community.</h3><p>Optional aggregate participation reports. These figures are self-reported, not verified by the awards website.</p><div class="teamgrid" id="teamstats"></div><div class="table-wrap" id="teamtable"></div></section>
 </main><footer class="foot"><div class="shell">Independent fan dashboard · Not affiliated with the awards organizer. Public standings are preliminary and may change after verification. <a href="https://theviralhitsawards.net/rules" target="_blank" rel="noopener noreferrer">Official voting rules ↗</a><br>Last successful snapshot: <span id="footstamp">—</span>. Updates depend on the tracker schedule; refresh to see the latest published page. This site does not cast votes.</div></footer><div class="sticky-vote"><a class="btn btn-primary" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" target="_blank" rel="noopener noreferrer">VOTE FOR LOOKMHEE ↗</a><button class="share" type="button" id="shareBottom">SHARE</button></div>
@@ -23,7 +82,57 @@ const stats=[['LOOKMHEE SHARE',pct(look?.pct),'mint','Public vote percentage'],[
 $('stats').innerHTML=stats.map(([k,v,cls,sub])=>`<article class="stat"><div class="kicker">${safe(k)}</div><div class="value ${cls}">${safe(v)}</div><div class="sub">${safe(sub)}</div></article>`).join('');
 for(const [item,pre] of [[look,'lm'],[sonya,'sonya']]){$(pre+'Value').textContent=pct(item?.pct);$(pre+'Bar').style.width=Math.min(100,Math.max(0,item?.pct||0))+'%';$(pre+'Foot').textContent=item?'Current rank #'+item.rank+' · Public vote share':'Not found in the latest snapshot';}
 $('leaderboard').innerHTML=data.latest.length?data.latest.map(x=>`<div class="leader-row ${isLM(x)?'look':isSonya(x)?'sonya':''}"><div class="rank">#${safe(x.rank)}</div><div class="nominee">${safe(x.name)}${isLM(x)?'<small>LOOKMHEE · FOCUS</small>':isSonya(x)?'<small>SONYA · SPOTLIGHT</small>':''}</div><div class="bar"><i style="width:${Math.min(100,Math.max(0,x.pct))}%;background:${isLM(x)?'var(--mint)':isSonya(x)?'var(--aqua)':'#6c8682'}"></i></div><div class="pct">${pct(x.pct)}</div></div>`).join(''):'<div class="empty">No public standings recorded yet.</div>';
-function renderChart(){const t=data.trend||[];if(!t.length){$('chart').innerHTML='<div class="empty">No historical snapshots yet.</div>';return}const w=1000,h=330,l=48,r=20,top=25,b=43,ww=w-l-r,hh=h-top-b;const x=i=>l+(t.length===1?.5:i/(t.length-1))*ww,y=v=>top+(100-v)/100*hh;const grid=[0,20,40,60,80,100].map(v=>`<line class="gridline" x1="${l}" y1="${y(v)}" x2="${w-r}" y2="${y(v)}"/><text class="axis" x="${l-10}" y="${y(v)+4}" text-anchor="end">${v}%</text>`).join('');const line=(arr,cls)=>`<polyline class="chart-line ${cls}" points="${arr.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}"/>`;const lm=t.map(p=>p.lookmhee),other=t.map(p=>p.runner_up),sonyaSeries=t.map(p=>{const s=(data.history_by_time||{})[p.time];return s?Number(s.sonya)||0:null});const sonyaOK=sonyaSeries.every(v=>v!==null);const n=t.length;const ticks=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i).map(i=>`<text class="axis" x="${x(i)}" y="${h-9}" text-anchor="middle">${safe(new Date(t[i].time).toLocaleDateString(undefined,{month:'short',day:'numeric',timeZone:'Asia/Bangkok'}))}</text>`).join('');const dots=t.length<3?lm.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#98f2d9"/>`).join(''):'';$('chart').innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Line chart showing Lookmhee and highest other nominee percentages over ${n} recorded snapshots">${grid}${line(lm,'')}${line(other,'other')}${sonyaOK?line(sonyaSeries,'sonya'):''}${dots}${ticks}</svg>`;$('chartNote').textContent=n+' historical snapshots · Percentages are rounded, not absolute vote totals.';}
+
+function leadSignal(){
+ const t=data.trend||[];
+ const box=$('leadChange');
+ if(t.length<2){box.innerHTML='<strong>Lead trend:</strong> More historical snapshots are needed to calculate a change.';box.className='lead-change neutral';return;}
+ const current=t[t.length-1],prior=t[t.length-2];
+ const delta=Number(current.gap)-Number(prior.gap);
+ if(!Number.isFinite(delta)){box.textContent='Lead change is not available for these snapshots.';return;}
+ const sign=delta>0.049?'▲':delta<-.049?'▼':'●';
+ const phrase=delta>0.049?'lead increased':delta<-.049?'lead decreased':'lead unchanged';
+ box.className='lead-change '+(delta<-.049?'negative':Math.abs(delta)<.05?'neutral':'');
+ box.innerHTML=`<strong>${sign} ${phrase}: ${Math.abs(delta).toFixed(1)} percentage points</strong> since the previous recorded snapshot. <span>Displayed percentages are rounded; this is not a vote-count change.</span>`;
+}
+function renderChart(){
+ const all=data.trend||[];
+ if(!all.length){$('chart').innerHTML='<div class="empty">No historical snapshots yet.</div>';return;}
+ const range=$('chartRange').value;
+ const latestMs=Date.parse(all[all.length-1].time);
+ let t=range==='all'?all:all.filter(p=>latestMs-Date.parse(p.time)<=Number(range)*3600000);
+ if(!t.length)t=[all[all.length-1]];
+ const mode=$('chartScale').value;
+ const w=1000,h=350,l=52,r=24,top=27,b=52,ww=w-l-r,hh=h-top-b;
+ const lm=t.map(p=>Number(p.lookmhee));
+ const other=t.map(p=>Number(p.runner_up));
+ const sonyaSeries=t.map(p=>{const s=(data.history_by_time||{})[p.time];return s&&s.sonya!==null&&s.sonya!==undefined?Number(s.sonya):null});
+ const sonyaOK=sonyaSeries.every(Number.isFinite);
+ let low=0,high=100;
+ if(mode==='detail'){
+   // Zoom on Lookmhee and the closest competitor; Sonya is omitted when outside zoom range.
+   const values=[...lm,...other].filter(Number.isFinite);
+   low=Math.max(0,Math.floor((Math.min(...values)-4)/5)*5);
+   high=Math.min(100,Math.ceil((Math.max(...values)+4)/5)*5);
+   if(high-low<10){const mid=(high+low)/2;low=Math.max(0,mid-5);high=Math.min(100,mid+5);}
+ }
+ const x=i=>l+(t.length===1?.5:i/(t.length-1))*ww;
+ const y=v=>top+(high-v)/(high-low)*hh;
+ const ticksY=Array.from({length:6},(_,i)=>low+(high-low)*i/5);
+ const grid=ticksY.map(v=>`<line class="gridline" x1="${l}" y1="${y(v)}" x2="${w-r}" y2="${y(v)}"/><text class="axis" x="${l-9}" y="${y(v)+4}" text-anchor="end">${v.toFixed(v%1?1:0)}%</text>`).join('');
+ const line=(arr,cls)=>`<polyline class="chart-line ${cls}" points="${arr.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')}"/>`;
+ const n=t.length;
+ const dates=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i);
+ const ticks=dates.map(i=>`<text class="axis" x="${x(i)}" y="${h-13}" text-anchor="${i===0?'start':i===n-1?'end':'middle'}">${safe(new Date(t[i].time).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',timeZone:'Asia/Bangkok'}))}</text>`).join('');
+ const circles=t.length<4?lm.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#98f2d9"/>`).join(''):'';
+ const drawSonya=mode==='full'&&sonyaOK;
+ $('chart').innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${mode==='detail'?'Detailed':'Full-scale'} chart of public vote percentages across ${n} snapshots">${grid}${line(lm,'')}${line(other,'other')}${drawSonya?line(sonyaSeries,'sonya'):''}${circles}${ticks}</svg>`;
+ $('chartNote').textContent=`${n} of ${all.length} historical snapshots shown · ${mode==='detail'?'Detailed scale focuses on Lookmhee and the nearest competitor; Sonya is hidden on this chart only.':'Full 0–100% scale.'} Public percentages are rounded; these are not absolute vote totals.`;
+}
+leadSignal();
+$('chartRange').addEventListener('change',renderChart);
+$('chartScale').addEventListener('change',renderChart);
+
 renderChart();
 const team=data.team||[];const latestTeam=team.length?team[team.length-1]:null;const teamStats=[['LAST REPORTED ACTIVE VOTERS',latestTeam?.active_voters??'—'],['LAST REPORTED FREE VOTES',latestTeam?.reported_free_votes??'—'],['DAYS REPORTED',team.length]];$('teamstats').innerHTML=teamStats.map(([k,v])=>`<div class="teamstat"><strong>${safe(v)}</strong><span>${safe(k)}</span></div>`).join('');$('teamtable').innerHTML=team.length?`<table><thead><tr><th>Thailand date</th><th>Active voters</th><th>Free votes</th><th>Special points</th><th>Notes</th></tr></thead><tbody>${team.slice().reverse().slice(0,14).map(x=>`<tr>${['date_thailand','active_voters','reported_free_votes','reported_special_points','notes'].map(k=>`<td>${safe(x[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`:'<div class="empty">No participation reports submitted yet. Your group can grow without a fixed member limit.</div>';
 async function share(){if(navigator.share){try{await navigator.share({title:'Lookmhee × Sonya Voting Command Center',url:location.href});return}catch(e){}}try{await navigator.clipboard.writeText(location.href);alert('Dashboard link copied!')}catch(e){prompt('Copy this dashboard link:',location.href)}}$('shareTop').addEventListener('click',share);$('shareBottom').addEventListener('click',share);
