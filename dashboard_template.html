@@ -122,7 +122,7 @@ svg.chart{min-width:0}
 <main class="shell"><div class="live-line"><div class="label">● PUBLIC STANDINGS MONITOR</div><div class="date" id="updated">Loading latest recorded snapshot…</div><button class="share" type="button" id="shareTop">SHARE DASHBOARD ↗</button></div>
 <div class="section-head" id="standings"><div><h2>The race at a glance.</h2><p>Current publicly displayed standings, rounded to one decimal place.</p></div></div><div class="statgrid" id="stats"></div><div class="lead-change" id="leadChange" aria-live="polite">Comparing the latest recorded snapshots…</div>
 <div class="spotlights"><article class="spot look"><div class="eyebrow">PRIMARY SPOTLIGHT</div><h3>Lookmhee Punyapat</h3><p class="thai">ลูกหมี ปัญญาพัชร</p><div class="number" id="lmValue">—</div><div class="bar"><i id="lmBar"></i></div><footer id="lmFoot">Waiting for results</footer></article><article class="spot sonya"><div class="eyebrow">ALSO NOMINATED</div><h3>Sonya Saranphat</h3><p class="thai">ซอนญ่า ศรัณย์ภัทร์</p><div class="number" id="sonyaValue">—</div><div class="bar"><i id="sonyaBar"></i></div><footer id="sonyaFoot">Waiting for results</footer></article></div>
-<section class="panel" id="trends"><div class="chart-heading"><h3>How the race is moving.</h3><div class="chart-controls" role="group" aria-label="Chart controls"><label for="chartRange">Period</label><select id="chartRange"><option value="all">All history</option><option value="24" selected>Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select><label for="chartScale">Scale</label><select id="chartScale"><option value="full" selected>Full (0–100%)</option><option value="detail">Detailed</option></select></div></div><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div class="chart-summary" id="chartSummary" aria-live="polite"></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><div class="chart-tooltip" id="chartTooltip" role="status" aria-live="polite">Hover or focus on a chart point to see its percentage.</div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
+<section class="panel" id="trends"><div class="chart-heading"><h3>How the race is moving.</h3><div class="chart-controls" role="group" aria-label="Chart controls"><label for="chartView">Nominees</label><select id="chartView" aria-label="Nominees to display"><option value="top5" selected>Top 5</option><option value="top3">Top 3</option><option value="spotlight">Lookmhee × Sonya</option></select><label for="chartRange">Period</label><select id="chartRange"><option value="all">All history</option><option value="24" selected>Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select><label for="chartScale">Scale</label><select id="chartScale"><option value="full" selected>Full (0–100%)</option><option value="detail">Detailed</option></select></div></div><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div class="chart-summary" id="chartSummary" aria-live="polite"></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><div class="chart-tooltip" id="chartTooltip" role="status" aria-live="polite">Hover or focus on a chart point to see its percentage.</div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
 <section class="panel"><h3>Complete leaderboard.</h3><p>All nominees tracked. Lookmhee and Sonya are highlighted; every nominee is shown.</p><div class="leader" id="leaderboard"></div></section>
 <section class="panel" id="team"><h3>Our voting community.</h3><p>Optional aggregate participation reports. These figures are self-reported, not verified by the awards website.</p><div class="teamgrid" id="teamstats"></div><div class="table-wrap" id="teamtable"></div></section>
 </main><footer class="foot"><div class="shell">Independent fan dashboard · Not affiliated with the awards organizer. Public standings are preliminary and may change after verification. <a href="https://theviralhitsawards.net/rules" target="_blank" rel="noopener noreferrer">Official voting rules ↗</a><br>Last successful snapshot: <span id="footstamp">—</span>. Updates depend on the tracker schedule; refresh to see the latest published page. This site does not cast votes.</div></footer><div class="sticky-vote"><a class="btn btn-primary" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" target="_blank" rel="noopener noreferrer">VOTE NOW ↗</a><button class="share" type="button" id="shareBottom">SHARE</button></div>
@@ -255,7 +255,124 @@ function renderChart(){
  $('chartNote').textContent=`${n} of ${all.length} historical snapshots shown · ${mode==='detail'?'Detailed mode: three separate charts, each with its own labeled percentage scale.':'Full 0–100% scale.'} Changes compare the first and last recorded snapshots in the selected period. Public percentages are rounded; these are not absolute vote totals.`;
 }
 
-leadSignal();
+
+/* Top 5 historical trends: reads the continuously published standings CSV.
+   This does not alter the tracker or the voting history. */
+const originalRenderChart = renderChart;
+let nomineeHistory = null;
+let historyStatus = '';
+const topColors = ['#98f2d9','#56b8e8','#bd9af7','#e9cf9c','#fa91b6'];
+const namedColor = name => name.includes('ลูกหมี') ? topColors[0] : name.includes('ซอนญ่า') ? '#e9cf9c' : null;
+const nomineeLabel = name => name.includes('ลูกหมี') ? 'Lookmhee' : name.includes('ซอนญ่า') ? 'Sonya' : name.includes('อิงฟ้า') ? 'Engfa' : name.includes('ฟรีน') ? 'Freen' : name.includes('แจ็คกี้') ? 'Jackie' : name;
+
+function parseStandingsCsv(text) {
+  const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
+  if (!lines.length) return [];
+  const headings = lines.shift().split(',').map(x => x.trim().replace(/^\uFEFF/, ''));
+  const indexes = ['timestamp_utc','nominee','percentage'].map(k => headings.indexOf(k));
+  if (indexes.some(i => i < 0)) throw new Error('CSV columns missing');
+  const grouped = new Map();
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    // The tracker CSV contains no commas inside the three required fields.
+    const cols = line.split(',');
+    const timestamp = cols[indexes[0]];
+    const name = cols[indexes[1]];
+    const value = Number(cols[indexes[2]]);
+    if (!timestamp || !name || !Number.isFinite(value)) continue;
+    if (!grouped.has(timestamp)) grouped.set(timestamp, new Map());
+    grouped.get(timestamp).set(name, value);
+  }
+  return [...grouped].sort((a,b)=>Date.parse(a[0])-Date.parse(b[0])).map(([time,values])=>({time,values}));
+}
+
+async function loadNomineeHistory() {
+  try {
+    const response = await fetch('viral_hits_standings.csv', {cache:'no-store'});
+    if (!response.ok) throw new Error('CSV request returned '+response.status);
+    const rows = parseStandingsCsv(await response.text());
+    if (!rows.length) throw new Error('No historical rows');
+    nomineeHistory = rows;
+    historyStatus = '';
+  } catch (error) {
+    historyStatus = 'Individual nominee history could not load. Showing the original three-series graph. Check that viral_hits_standings.csv is published beside index.html.';
+  }
+  renderChart();
+}
+
+renderChart = function() {
+  if (!nomineeHistory) {
+    originalRenderChart();
+    if (historyStatus) $('chartNote').textContent = historyStatus;
+    return;
+  }
+  const all = nomineeHistory;
+  const latest = all[all.length-1];
+  const current = [...latest.values].sort((a,b)=>b[1]-a[1]);
+  const selection = $('chartView').value;
+  let names = selection==='top3' ? current.slice(0,3).map(x=>x[0]) :
+              selection==='spotlight' ? [current.find(x=>x[0].includes('ลูกหมี'))?.[0],current.find(x=>x[0].includes('ซอนญ่า'))?.[0]].filter(Boolean) :
+              current.slice(0,5).map(x=>x[0]);
+  if (!names.length) { $('chart').innerHTML='<div class="empty">No nominee data available.</div>'; return; }
+  const range = $('chartRange').value;
+  const latestMs = Date.parse(latest.time);
+  let t = range==='all' ? all : all.filter(p => latestMs-Date.parse(p.time)<=Number(range)*3600000);
+  if (!t.length) t=[latest];
+  const mode = $('chartScale').value;
+  const series = names.map((name,i)=>({
+    name:nomineeLabel(name),
+    fullName:name,
+    values:t.map(p=>p.values.has(name)?p.values.get(name):null),
+    color:namedColor(name) || topColors[i % topColors.length]
+  }));
+  // Make each line visually distinct even when the rank changes.
+  const assigned = new Set();
+  series.forEach((s,i)=>{if(assigned.has(s.color)) s.color=topColors.find(c=>!assigned.has(c))||topColors[i%topColors.length];assigned.add(s.color)});
+  const fmtDelta = v => `${v>0?'+':''}${v.toFixed(1)} pp`;
+  $('trends').querySelector('.legend').innerHTML=series.map(s=>`<span><i class="dot" style="background:${s.color}"></i>${safe(s.name)}</span>`).join('');
+  $('chartSummary').innerHTML=series.map(s=>{
+    const vals=s.values.filter(Number.isFinite),diff=vals.length>1?vals[vals.length-1]-vals[0]:null;
+    return `<div class="chart-delta"><span>${safe(s.name)} · selected period</span><strong class="${diff===null?'':diff>0?'up':diff<0?'down':''}">${diff===null?'Not enough data':fmtDelta(diff)}</strong></div>`;
+  }).join('');
+  const w=1000,l=60,r=28,n=t.length;
+  const x=i=>l+(n===1?.5:i/(n-1))*(w-l-r);
+  const dateLabel=i=>safe(new Date(t[i].time).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'Asia/Bangkok'}));
+  const ticks=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i);
+  const xLabels=h=>ticks.map(i=>`<text class="axis" x="${x(i)}" y="${h-15}" text-anchor="${i===0?'start':i===n-1?'end':'middle'}">${dateLabel(i)}</text>`).join('');
+  // Keep chart responsive with many snapshots. Each plotted point remains part of the full line.
+  const chartPoints=(s,y)=>s.values.map((v,i)=>Number.isFinite(v)?`<circle class="chart-point" tabindex="0" role="img" aria-label="${safe(s.name)}, ${dateLabel(i)}, ${v.toFixed(1)} percent" data-name="${safe(s.name)}" data-date="${dateLabel(i)}" data-value="${v.toFixed(1)}" cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="${n>40?4:5}" fill="${s.color}" stroke="#091113" stroke-width="2"><title>${safe(s.name)} · ${dateLabel(i)} · ${v.toFixed(1)}%</title></circle>`:'').join('');
+  const poly=(s,y)=>`<polyline fill="none" stroke="${s.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${s.values.map((v,i)=>Number.isFinite(v)?`${x(i).toFixed(1)},${y(v).toFixed(1)}`:'').filter(Boolean).join(' ')}"/>`;
+  let svg='';
+  if(mode==='detail') {
+    const band=215,top=43,plot=125,h=band*series.length+28;
+    svg=series.map((s,j)=>{
+      const valid=s.values.filter(Number.isFinite);
+      if(!valid.length)return '';
+      const min=Math.min(...valid),max=Math.max(...valid),pad=Math.max(.15,(max-min)*.25);
+      const low=Math.max(0,Math.floor((min-pad)*10)/10),high=Math.min(100,Math.ceil((max+pad)*10)/10);
+      const lo=high<=low?Math.max(0,low-.5):low,hi=high<=low?Math.min(100,high+.5):high;
+      const y=v=>j*band+top+(hi-v)/(hi-lo)*plot;
+      const guides=[lo,(lo+hi)/2,hi].map(v=>`<line class="gridline" x1="${l}" x2="${w-r}" y1="${y(v)}" y2="${y(v)}"/><text class="axis" x="${l-10}" y="${y(v)+4}" text-anchor="end">${v.toFixed(1)}%</text>`).join('');
+      return `<text class="chart-mini-title" x="${l}" y="${j*band+20}">${safe(s.name)} · individual scale</text>${guides}${poly(s,y)}${chartPoints(s,y)}`;
+    }).join('')+xLabels(h);
+    $('chart').innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="group" aria-label="${series.length} detailed nominee charts with independent vertical scales">${svg}</svg>`;
+  } else {
+    const h=350,top=27,b=52,plot=h-top-b,y=v=>top+(100-v)/100*plot;
+    const guides=[0,20,40,60,80,100].map(v=>`<line class="gridline" x1="${l}" x2="${w-r}" y1="${y(v)}" y2="${y(v)}"/><text class="axis" x="${l-10}" y="${y(v)+4}" text-anchor="end">${v}%</text>`).join('');
+    svg=guides+series.map(s=>poly(s,y)+chartPoints(s,y)).join('')+xLabels(h);
+    $('chart').innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="group" aria-label="Full scale chart of ${series.length} nominee percentages">${svg}</svg>`;
+  }
+  const tip=$('chartTooltip');
+  $('chart').querySelectorAll('.chart-point').forEach(p=>{
+    const show=()=>{tip.textContent=`${p.dataset.name} · ${p.dataset.date} (Thailand time) · ${p.dataset.value}%`;};
+    p.addEventListener('mouseenter',show);p.addEventListener('focus',show);
+  });
+  $('chartNote').textContent=`${n} of ${all.length} historical snapshots shown · ${mode==='detail'?'Individual percentage scales':'Full 0–100% scale'} · ${series.length} nominees. Changes compare the first and last snapshots in the selected period. Public percentages are rounded, not vote totals.`;
+};
+$('chartView').addEventListener('change',renderChart);
+loadNomineeHistory();
+
+ leadSignal();
 $('chartRange').addEventListener('change',renderChart);
 $('chartScale').addEventListener('change',renderChart);
 
