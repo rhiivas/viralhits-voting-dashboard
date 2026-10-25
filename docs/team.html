@@ -23,6 +23,31 @@
  .hero-actions{flex-wrap:nowrap}
  .hero-actions .btn{white-space:nowrap;padding:11px 12px;font-size:10px}
 }
+
+/* Live leaderboard progress-bar correction */
+.leader-row .bar {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.12);
+  border-radius: 999px;
+  height: 10px;
+}
+
+.leader-row .bar > span {
+  display: block;
+  height: 100%;
+  background: #6f8985;
+  border-radius: inherit;
+}
+
+.leader-row.look .bar > span {
+  background: #96efd9;
+}
+
+.leader-row.sonya .bar > span {
+  background: #6ec8c2;
+}
+
 </style>
 <style>
 /* Campaign refinements: portrait visibility, lead signal, chart controls, mobile */
@@ -486,4 +511,90 @@ $('chartScale').addEventListener('change',renderChart);
 renderChart();
 const team=data.team||[];const latestTeam=team.length?team[team.length-1]:null;const teamStats=[['LAST REPORTED ACTIVE VOTERS',latestTeam?.active_voters??'—'],['LAST REPORTED FREE VOTES',latestTeam?.reported_free_votes??'—'],['DAYS REPORTED',team.length]];$('teamstats').innerHTML=teamStats.map(([k,v])=>`<div class="teamstat"><strong>${safe(v)}</strong><span>${safe(k)}</span></div>`).join('');$('teamtable').innerHTML=team.length?`<table><thead><tr><th>Thailand date</th><th>Active voters</th><th>Free votes</th><th>Special points</th><th>Notes</th></tr></thead><tbody>${team.slice().reverse().slice(0,14).map(x=>`<tr>${['date_thailand','active_voters','reported_free_votes','reported_special_points','notes'].map(k=>`<td>${safe(x[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`:'<div class="empty">No participation reports submitted yet. Your group can grow without a fixed member limit.</div>';
 async function share(){if(navigator.share){try{await navigator.share({title:'Lookmhee × Sonya Voting Command Center',url:location.href});return}catch(e){}}try{await navigator.clipboard.writeText(location.href);alert('Dashboard link copied!')}catch(e){prompt('Copy this dashboard link:',location.href)}}$('shareTop').addEventListener('click',share);$('shareBottom').addEventListener('click',share);
+
+// LIVE_TEAM_CSV_SYNC_V1
+async function syncTeamLeaderboard() {
+  try {
+    const response = await fetch(
+      'viral_hits_standings.csv?t=' + Date.now(),
+      {cache: 'no-store'}
+    );
+
+    if (!response.ok) throw new Error('CSV HTTP ' + response.status);
+
+    const text = await response.text();
+    const lines = text.trim().split(/\r?\n/);
+    const headers = lines.shift().split(',');
+
+    const timestampIndex = headers.indexOf('timestamp_utc');
+    const rankIndex = headers.indexOf('rank');
+    const nameIndex = headers.indexOf('nominee');
+    const pctIndex = headers.indexOf('percentage');
+
+    if ([timestampIndex, rankIndex, nameIndex, pctIndex].includes(-1)) {
+      throw new Error('CSV columns do not match expected format');
+    }
+
+    const rows = lines.map(line => line.split(','))
+      .filter(parts => parts.length === headers.length);
+
+    if (!rows.length) throw new Error('CSV contains no records');
+
+    const latestTimestamp = rows[rows.length - 1][timestampIndex];
+
+    const latest = rows
+      .filter(parts => parts[timestampIndex] === latestTimestamp)
+      .map(parts => ({
+        name: parts[nameIndex],
+        pct: Number(parts[pctIndex]),
+        rank: Number(parts[rankIndex])
+      }))
+      .filter(item => Number.isFinite(item.pct))
+      .sort((a, b) => a.rank - b.rank);
+
+    if (latest.length !== 12) {
+      throw new Error('Expected 12 nominees; found ' + latest.length);
+    }
+
+    data.latest = latest;
+    data.last = latestTimestamp;
+
+    const lookmhee = latest.find(x => x.name.includes('ลูกหมี'));
+    const runner = latest.find(x => x !== lookmhee);
+
+    if (lookmhee) {
+      data.target = lookmhee;
+      data.runner = runner;
+      data.lead = runner ? lookmhee.pct - runner.pct : null;
+    }
+
+    const leaderboard = document.getElementById('leaderboard');
+
+    if (leaderboard) {
+      leaderboard.innerHTML = latest.map(x => {
+        const focus = x.name.includes('ลูกหมี');
+        const sonya = x.name.includes('ซอนญ่า');
+
+        return `<div class="leader-row ${focus ? 'look' : sonya ? 'sonya' : ''}">
+          <div class="rank">#${x.rank}</div>
+          <div class="nominee">${x.name}
+            ${focus ? '<small>LOOKMHEE · FOCUS</small>' : ''}
+            ${sonya ? '<small>SONYA · SPOTLIGHT</small>' : ''}
+          </div>
+          <div class="bar"><span style="width:${Math.min(100, Math.max(0, x.pct))}%"></span></div>
+          <div class="pct">${x.pct.toFixed(1)}%</div>
+        </div>`;
+      }).join('');
+    }
+
+    console.log('Team leaderboard updated:', latestTimestamp);
+
+  } catch (error) {
+    console.error('Team leaderboard update failed:', error);
+  }
+}
+
+syncTeamLeaderboard();
+setInterval(syncTeamLeaderboard, 60000);
+
 </script></body></html>
