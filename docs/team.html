@@ -566,6 +566,8 @@ async function syncTeamLeaderboard() {
 
     data.latest = latest;
     data.last = latestTimestamp;
+    $('updated').textContent = 'LATEST SNAPSHOT · ' + timeLabel(data.last);
+    $('footstamp').textContent = timeLabel(data.last);
 
     const lookmhee = latest.find(x => x.name.includes('ลูกหมี'));
     const runner = latest.find(x => x !== lookmhee);
