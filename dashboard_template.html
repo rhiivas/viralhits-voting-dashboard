@@ -124,16 +124,67 @@ for(const [item,pre] of [[look,'lm'],[sonya,'sonya']]){$(pre+'Value').textConten
 $('leaderboard').innerHTML=data.latest.length?data.latest.map(x=>`<div class="leader-row ${isLM(x)?'look':isSonya(x)?'sonya':''}"><div class="rank">#${safe(x.rank)}</div><div class="nominee">${safe(x.name)}${isLM(x)?'<small>LOOKMHEE · FOCUS</small>':isSonya(x)?'<small>SONYA · SPOTLIGHT</small>':''}</div><div class="bar"><i style="width:${Math.min(100,Math.max(0,x.pct))}%;background:${isLM(x)?'var(--mint)':isSonya(x)?'var(--aqua)':'#6c8682'}"></i></div><div class="pct">${pct(x.pct)}</div></div>`).join(''):'<div class="empty">No public standings recorded yet.</div>';
 
 function leadSignal(){
- const t=data.trend||[];
- const box=$('leadChange');
- if(t.length<2){box.innerHTML='<strong>Lead trend:</strong> More historical snapshots are needed to calculate a change.';box.className='lead-change neutral';return;}
- const current=t[t.length-1],prior=t[t.length-2];
- const delta=Number(current.gap)-Number(prior.gap);
- if(!Number.isFinite(delta)){box.textContent='Lead change is not available for these snapshots.';return;}
- const sign=delta>0.049?'▲':delta<-.049?'▼':'●';
- const phrase=delta>0.049?'lead increased':delta<-.049?'lead decreased':'lead unchanged';
- box.className='lead-change '+(delta<-.049?'negative':Math.abs(delta)<.05?'neutral':'');
- box.innerHTML=`<strong>${sign} ${phrase}: ${Math.abs(delta).toFixed(1)} percentage points</strong> since the previous recorded snapshot. <span>Displayed percentages are rounded; this is not a vote-count change.</span>`;
+  const t=data.trend||[];
+  const box=$('leadChange');
+
+  if(t.length<2){
+    box.innerHTML='<strong>Lead trend:</strong> More historical snapshots are needed.';
+    box.className='lead-change neutral';
+    return;
+  }
+
+  const latest=t[t.length-1];
+  let change=null;
+
+  for(let i=t.length-1;i>0;i--){
+    const currentGap=Number(t[i].gap);
+    const previousGap=Number(t[i-1].gap);
+
+    if(!Number.isFinite(currentGap)||!Number.isFinite(previousGap)) continue;
+
+    const difference=currentGap-previousGap;
+
+    if(Math.abs(difference)>=0.05){
+      change={
+        delta:difference,
+        time:t[i].time
+      };
+      break;
+    }
+  }
+
+  const formatTime=value=>{
+    const date=new Date(value);
+    return Number.isNaN(date.getTime())
+      ? 'Unknown'
+      : date.toLocaleString(undefined,{
+          month:'short',
+          day:'numeric',
+          hour:'numeric',
+          minute:'2-digit'
+        });
+  };
+
+  const checked=formatTime(latest.time);
+
+  if(!change){
+    box.className='lead-change neutral';
+    box.innerHTML='<strong>No recorded lead change yet.</strong> Last checked: '+checked+'.';
+    return;
+  }
+
+  const increased=change.delta>0;
+  const direction=increased?'increased':'decreased';
+  const arrow=increased?'▲':'▼';
+
+  box.className='lead-change '+(increased?'':'negative');
+
+  box.innerHTML=
+    '<strong>'+arrow+' Last lead change: '+formatTime(change.time)+'</strong>'+
+    ' — Lookmhee’s lead '+direction+' by '+
+    Math.abs(change.delta).toFixed(1)+
+    ' percentage points. <span>Last checked: '+checked+
+    '. Displayed percentages are rounded.</span>';
 }
 function renderChart(){
  const all=data.trend||[];
