@@ -264,6 +264,176 @@ main .spotlights {
 <div class="spotlights"><article class="spot look"><div class="eyebrow">SPOTLIGHT</div><h3>Lookmhee Punyapat</h3><p class="thai">ลูกหมี ปัญญาพัชร</p><div class="number" id="lmValue">—</div><div class="bar"><i id="lmBar"></i></div><footer id="lmFoot">Waiting for results</footer></article><article class="spot sonya"><div class="eyebrow">SPOTLIGHT</div><h3>Sonya Saranphat</h3><p class="thai">ซอนญ่า ศรัณย์ภัทร์</p><div class="number" id="sonyaValue">—</div><div class="bar"><i id="sonyaBar"></i></div><footer id="sonyaFoot">Waiting for results</footer></article></div>
 <section class="panel" id="trends" style="; display: none !important;"><div class="chart-heading"><h3>How the race is moving.</h3><div aria-label="Chart controls" class="chart-controls" role="group"><label for="chartView">Nominees</label><select aria-label="Nominees to display" id="chartView"><option selected="" value="top5">Top 5</option><option value="top3">Top 3</option><option value="spotlight">Lookmhee × Sonya</option></select><label for="chartRange">Period</label><select id="chartRange"><option value="all">All history</option><option selected="" value="24">Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select><label for="chartScale">Scale</label><select id="chartScale"><option selected="" value="full">Full (0–100%)</option><option value="detail">Detailed</option></select></div></div><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div aria-live="polite" class="chart-summary" id="chartSummary"></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><div aria-live="polite" class="chart-tooltip" id="chartTooltip" role="status">Hover or focus on a chart point to see its percentage.</div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
 <section class="panel"><h3>Complete leaderboard.</h3><p>All nominees tracked. Lookmhee and Sonya are highlighted; every nominee is shown.</p><div class="leader" id="leaderboard"></div></section>
+
+<section class="panel" id="registration-tutorial" style="display: block !important;">
+  <details class="registration-details">
+    <summary class="registration-toggle">
+      <span>📖 HOW TO REGISTER TO VOTE</span>
+      <span class="registration-arrow" aria-hidden="true">⌄</span>
+    </summary>
+
+    <div class="registration-content">
+      <p class="registration-note">
+        <strong>Note:</strong> The website is prone to error messages when translating the page.
+        See the screenshots below for reference.
+      </p>
+
+      <p>
+        You can translate the page to familiarize yourself with the required
+        information, but complete your registration using the original,
+        untranslated website.
+      </p>
+
+      <p>
+        No need to use actual passport number or phone number.
+      </p>
+
+      <div class="registration-step">
+        <h4>STEP 1 — SIGN UP TO VOTE</h4>
+        <p>Visit the Viral Hits Awards website and select the sign-up option.</p>
+        <img src="registration-tutorial/IMG_4576.jpg"
+             alt="Step 1: Viral Hits Awards sign-up page"
+             loading="lazy">
+      </div>
+
+      <div class="registration-step">
+        <h4>STEP 2 — ACCEPT THE TERMS</h4>
+        <p>Review the registration terms, check the acknowledgment box,
+        and select the confirmation button to continue.</p>
+        <img src="registration-tutorial/IMG_4579.jpg"
+             alt="Step 2: Registration terms and confirmation"
+             loading="lazy">
+      </div>
+
+      <div class="registration-step">
+        <h4>STEP 3 — ACCEPT THE ADDITIONAL TERMS</h4>
+        <p>Review the additional terms, check the acknowledgment box,
+        and select the confirmation button.</p>
+        <img src="registration-tutorial/IMG_4582.jpg"
+             alt="Step 3: Additional registration terms"
+             loading="lazy">
+      </div>
+
+      <div class="registration-step">
+        <h4>STEP 4 — COMPLETE YOUR REGISTRATION</h4>
+        <p>Use the screenshots or translated page to understand the required
+        fields. Return to the original, untranslated website before
+        completing and submitting your registration.</p>
+        <img src="registration-tutorial/IMG_4583.jpg"
+             alt="Step 4: Registration form"
+             loading="lazy">
+      </div>
+
+      <div class="registration-step">
+        <h4>STEP 5 — VERIFY YOUR EMAIL</h4>
+        <p>After submitting your registration, follow the verification
+        instructions. A verification code will be sent to your provided
+        email address. Enter the code to complete verification.</p>
+        <img src="registration-tutorial/IMG_4584.jpg"
+             alt="Step 5: Email verification request"
+             loading="lazy">
+      </div>
+
+      <a class="btn btn-primary"
+         href="https://theviralhitsawards.net/"
+         target="_blank"
+         rel="noopener noreferrer">
+        REGISTER TO VOTE ↗
+      </a>
+    </div>
+  </details>
+</section>
+
+<style>
+.registration-details {
+  width: 100%;
+}
+
+.registration-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 1.05rem;
+  list-style: none;
+  background: rgba(160, 110, 255, 0.12);
+  border: 1px solid rgba(160, 110, 255, 0.35);
+}
+
+.registration-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.registration-arrow {
+  font-size: 1.6rem;
+  transition: transform 0.2s ease;
+}
+
+.registration-details[open] .registration-arrow {
+  transform: rotate(180deg);
+}
+
+.registration-content {
+  padding: 22px 4px 8px;
+}
+
+.registration-note {
+  padding: 16px 18px;
+  border-radius: 12px;
+  border-left: 4px solid #b68cff;
+  background: rgba(160, 110, 255, 0.12);
+  margin-bottom: 20px;
+}
+
+.registration-step {
+  margin: 30px 0;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(160, 110, 255, 0.18);
+}
+
+.registration-step h4 {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+
+.registration-step p {
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.registration-step img {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 14px;
+  border: 1px solid rgba(160, 110, 255, 0.25);
+}
+
+.registration-content > .btn {
+  margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+  .registration-toggle {
+    padding: 16px;
+    font-size: 0.95rem;
+  }
+
+  .registration-content {
+    padding: 18px 0 6px;
+  }
+
+  .registration-step img {
+    max-width: 100%;
+  }
+}
+</style>
 <section class="panel" id="team"><h3>Our voting community.</h3><p>Optional aggregate participation reports. These figures are self-reported, not verified by the awards website.</p><div class="teamgrid" id="teamstats"></div><div class="table-wrap" id="teamtable"></div></section>
 </main><footer class="foot"><div class="shell">Independent fan dashboard · Not affiliated with the awards organizer. Public standings are preliminary and may change after verification. <a href="https://theviralhitsawards.net/rules" rel="noopener noreferrer" target="_blank">Official voting rules ↗</a><br/>Last successful snapshot: <span id="footstamp">—</span>. Updates depend on the tracker schedule; refresh to see the latest published page. This site does not cast votes.</div></footer><div class="sticky-vote"><a class="btn btn-primary" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" rel="noopener noreferrer" target="_blank">VOTE NOW ↗</a><button class="share" id="shareBottom" type="button">SHARE</button></div>
 <script>
