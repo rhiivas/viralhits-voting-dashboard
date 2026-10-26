@@ -261,8 +261,76 @@ main .spotlights {
 <section class="hero"><img alt="Lookmhee on the left and Sonya on the right, posing together in a fashion photograph" class="hero-photo" src="lookmhee-sonya.JPEG"/><div class="hero-inner shell"><div class="copy"><span class="eyebrow">THE VIRAL HITS AWARDS 2026 · BEST ACTRESS</span><h1>LOOKMHEE<br/><em>× SONYA.</em></h1><div class="subtitle">Two stars. One fan community.<br/>Following the race, together.</div><div class="hero-actions"><a class="btn btn-primary" href="https://theviralhitsawards.net/categories/c66dab9ca5dc545139369cca0dc3be6e8" rel="noopener noreferrer" target="_blank">VOTE NOW ↗</a><a class="btn btn-secondary" href="#standings">VIEW STANDINGS ↓</a></div><div class="hero-note">Fan-made, independent dashboard · Public results only</div></div></div></section>
 <main class="shell"><div class="live-line" style="; display: none !important;"><div class="label">● PUBLIC STANDINGS MONITOR</div><div class="date" id="updated">Loading latest recorded snapshot…</div><button class="share" id="shareTop" type="button">SHARE DASHBOARD ↗</button></div>
 <div class="section-head" id="standings" style="; display: none !important;"><div><h2>The race at a glance.</h2><p>Current publicly displayed standings, rounded to one decimal place.</p></div></div><div class="statgrid" id="stats" style="; display: none !important;"></div><div aria-live="polite" class="lead-change" id="leadChange" style="; display: none !important;">Comparing the latest recorded snapshots…</div>
+<section class="panel" id="voting-countdown" style="
+  display:block !important;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(145deg,#152427,#102022);
+  box-shadow:
+    0 0 18px rgba(130,220,185,0.16),
+    0 0 36px rgba(100,210,220,0.08),
+    inset 0 0 18px rgba(130,220,185,0.04);
+">
+  <h3 style="
+          color:var(--mint);
+          text-shadow:
+            0 0 8px rgba(130,220,185,0.45),
+            0 0 18px rgba(100,210,220,0.20);
+        ">⏳ OFFICIAL VOTING COUNTDOWN</h3>
+  <p>Time remaining to vote for Lookmhee &amp; Sonya</p>
+
+  <div id="countdown-clock" style="
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:20px 0;
+  ">
+    <div><strong id="countdown-days">--</strong><br><small>DAYS</small></div>
+    <div><strong id="countdown-hours">--</strong><br><small>HOURS</small></div>
+    <div><strong id="countdown-minutes">--</strong><br><small>MINUTES</small></div>
+    <div><strong id="countdown-seconds">--</strong><br><small>SECONDS</small></div>
+  </div>
+
+  <p id="countdown-message">
+    Voting closes January 20, 2027, at 11:59 PM Thailand time.
+  </p>
+</section>
+
+<script>
+(function () {
+  // January 20, 2027, 11:59 PM Thailand time (UTC+7)
+  const deadline = new Date("2027-01-20T23:59:00+07:00").getTime();
+
+  function updateCountdown() {
+    const remaining = Math.max(0, deadline - Date.now());
+
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    document.getElementById("countdown-days").textContent = days;
+    document.getElementById("countdown-hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("countdown-minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("countdown-seconds").textContent = String(seconds).padStart(2, "0");
+
+    if (remaining === 0) {
+      document.getElementById("countdown-message").textContent = "VOTING HAS ENDED";
+      clearInterval(timer);
+    }
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+})();
+</script>
+
+
 <div class="spotlights"><article class="spot look"><div class="eyebrow">SPOTLIGHT</div><h3>Lookmhee Punyapat</h3><p class="thai">ลูกหมี ปัญญาพัชร</p><div class="number" id="lmValue">—</div><div class="bar"><i id="lmBar"></i></div><footer id="lmFoot">Waiting for results</footer></article><article class="spot sonya"><div class="eyebrow">SPOTLIGHT</div><h3>Sonya Saranphat</h3><p class="thai">ซอนญ่า ศรัณย์ภัทร์</p><div class="number" id="sonyaValue">—</div><div class="bar"><i id="sonyaBar"></i></div><footer id="sonyaFoot">Waiting for results</footer></article></div>
 <section class="panel" id="trends" style="; display: none !important;"><div class="chart-heading"><h3>How the race is moving.</h3><div aria-label="Chart controls" class="chart-controls" role="group"><label for="chartView">Nominees</label><select aria-label="Nominees to display" id="chartView"><option selected="" value="top5">Top 5</option><option value="top3">Top 3</option><option value="spotlight">Lookmhee × Sonya</option></select><label for="chartRange">Period</label><select id="chartRange"><option value="all">All history</option><option selected="" value="24">Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select><label for="chartScale">Scale</label><select id="chartScale"><option selected="" value="full">Full (0–100%)</option><option value="detail">Detailed</option></select></div></div><p>Historical snapshots collected by the tracker. Each point reflects the public percentage at that time.</p><div class="legend"><span><i class="dot"></i>Lookmhee</span><span><i class="dot other"></i>Highest other nominee</span><span><i class="dot sonya"></i>Sonya</span></div><div aria-live="polite" class="chart-summary" id="chartSummary"></div><div class="chart-wrap" id="chart"><div class="empty">Chart loading…</div></div><div aria-live="polite" class="chart-tooltip" id="chartTooltip" role="status">Hover or focus on a chart point to see its percentage.</div><p id="chartNote" style="margin-top:10px">Percentages are rounded and are not absolute vote totals.</p></section>
+
 <section class="panel"><h3>Complete leaderboard.</h3><p>All nominees tracked. Lookmhee and Sonya are highlighted; every nominee is shown.</p><div class="leader" id="leaderboard"></div></section>
 
 <section class="panel" id="registration-tutorial" style="display: block !important;">
